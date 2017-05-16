@@ -22,7 +22,8 @@
                     '</table>'                                  +
                   '<div>',
     onSelectStart: function () {},
-    onSelectEnd: function () {}
+    onSelectEnd: function () {},
+    onDataChange: function (new_data) {}
   };
 
   /**
@@ -108,6 +109,7 @@
         if (isSlotSelected($(this))) {
           plugin.deselect($(this));
           plugin.$el.trigger('dataChanged', [plugin.serialize()]);
+          options.onDataChange(plugin.serialize());
         }
         else {  // then start selecting
           plugin.$selectingStart = $(this);
@@ -124,6 +126,7 @@
           plugin.$el.find('.time-slot').removeAttr('data-disabled');
           plugin.$el.trigger('selected.artsy.dayScheduleSelector', [getSelection(plugin, plugin.$selectingStart, $(this))]);
           plugin.$el.trigger('dataChanged', [plugin.serialize()]);
+          options.onDataChange(plugin.serialize());
           plugin.$selectingStart = null;
           options.onSelectEnd();
         }
