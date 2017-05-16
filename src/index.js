@@ -105,6 +105,8 @@
       if (!plugin.isSelecting()) {  // if we are not in selecting mode
         if (isSlotSelected($(this))) { plugin.deselect($(this)); }
         else {  // then start selecting
+          // Display help text
+          $('.day-schedule-selector').prepend('<div class="day-schedule-help-text">Please select an end time</div>');
           plugin.$selectingStart = $(this);
           $(this).attr('data-selecting', 'selecting');
           plugin.$el.find('.time-slot').attr('data-disabled', 'disabled');
@@ -113,6 +115,7 @@
       } else {  // if we are in selecting mode
         if (day == plugin.$selectingStart.data('day')) {  // if clicking on the same day column
           // then end of selection
+          $('.day-schedule-help-text').remove();
           plugin.$el.find('.time-slot[data-day="' + day + '"]').filter('[data-selecting]')
             .attr('data-selected', 'selected').removeAttr('data-selecting');
           plugin.$el.find('.time-slot').removeAttr('data-disabled');
