@@ -27,11 +27,17 @@
         },
         onSelectEnd: function() {
           $('.day-schedule-help-text').remove();
+        },
+        onDataChange: function(newData) {
+          console.dir(newData);
         }*/
       });
       $("#day-schedule").on('selected.artsy.dayScheduleSelector', function (e, selected) {
         console.log(selected);
       })
+      $("#day-schedule").on('dataChanged', function(e, data) {
+        console.dir(data);
+      });
       $("#day-schedule").data('artsy.dayScheduleSelector').deserialize({
         '0': [['09:30', '11:00'], ['13:00', '16:30']]
       });
