@@ -105,7 +105,10 @@
     this.$el.on('click', '.time-slot', function () {
       var day = $(this).data('day');
       if (!plugin.isSelecting()) {  // if we are not in selecting mode
-        if (isSlotSelected($(this))) { plugin.deselect($(this)); }
+        if (isSlotSelected($(this))) {
+          plugin.deselect($(this));
+          plugin.$el.trigger('dataChanged', [plugin.serialize()]);
+        }
         else {  // then start selecting
           plugin.$selectingStart = $(this);
           $(this).attr('data-selecting', 'selecting');
@@ -120,8 +123,9 @@
             .attr('data-selected', 'selected').removeAttr('data-selecting');
           plugin.$el.find('.time-slot').removeAttr('data-disabled');
           plugin.$el.trigger('selected.artsy.dayScheduleSelector', [getSelection(plugin, plugin.$selectingStart, $(this))]);
+          plugin.$el.trigger('dataChanged', [plugin.serialize()]);
           plugin.$selectingStart = null;
-          options.onSelectEnd()
+          options.onSelectEnd();
         }
       }
     });
