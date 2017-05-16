@@ -1,4 +1,4 @@
-(function ($) {
+module.exports = (function ($) {
   'use strict';
 
   var DayScheduleSelector = function (el, options) {
