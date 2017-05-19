@@ -21,6 +21,7 @@ module.exports = (function ($) {
                       '<tbody class="schedule-rows"></tbody>'   +
                     '</table>'                                  +
                   '<div>',
+    enabled     : true,
     onSelectStart: function () {},
     onSelectEnd: function () {},
     onDataChange: function (new_data) {}
@@ -104,6 +105,9 @@ module.exports = (function ($) {
       , $slots;
 
     this.$el.on('click', '.time-slot', function () {
+      if (plugin.options.enabled === false) {
+        return;
+      }
       var day = $(this).data('day');
       if (!plugin.isSelecting()) {  // if we are not in selecting mode
         if (isSlotSelected($(this))) {
@@ -134,6 +138,9 @@ module.exports = (function ($) {
     });
 
     this.$el.on('mouseover', '.time-slot', function () {
+      if (plugin.options.enabled === false) {
+        return;
+      }
       var $slots, day, start, end, temp;
       if (plugin.isSelecting()) {  // if we are in selecting mode
         day = plugin.$selectingStart.data('day');
@@ -216,6 +223,24 @@ module.exports = (function ($) {
       })
     });
   };
+
+  DayScheduleSelector.prototype.clear = function () {
+    var plugin = this;
+    // deselect all cells
+    plugin.$el.find('.time-slot').removeAttr('data-selected');
+  }
+
+  DayScheduleSelector.prototype.enable = function () {
+    var plugin = this;
+    plugin.options.enabled = true;
+    plugin.$el.removeClass('disabled');
+  }
+
+  DayScheduleSelector.prototype.disable = function () {
+    var plugin = this;
+    plugin.options.enabled = false;
+    plugin.$el.addClass('disabled');
+  }
 
   // DayScheduleSelector Plugin Definition
   // =====================================
