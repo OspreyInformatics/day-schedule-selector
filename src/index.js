@@ -297,6 +297,9 @@ module.exports = (function ($) {
     if (hours > 12) {
       hours -= 12;
     }
+    if (hours === 0) {
+      hours = 12;
+    }
     return hours + ':' + ('0' + minutes).slice(-2) + ampm;
   }
 
